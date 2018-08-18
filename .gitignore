@@ -1,0 +1,6 @@
+TCGA-PANCAN-HiSeq-801x20531/
+TCGA-PANCAN-HiSeq-801x20531.tar.gz
+*.pyc
+*~
+__pycache__
+.DS_Store

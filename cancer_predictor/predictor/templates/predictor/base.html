@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Datatables CSS -->
+    <!--link href="{% static 'css/dataTables.min.css' %}" rel="stylesheet"-->
+    <!--link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet"-->
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>CanPred</title>
+    {% block HEADER %}{% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav text-center no-indent" style="color: white">
+            <li class="sidebar-brand"><a href="{% url 'home' %}">
+                <h1>CanPred</h1>
+            </a>
+            </li>
+            <li><a href="/">
+                <figure>
+                    <img class="sidebar-iconise" src="{% static 'images/home-white.png' %}"
+                         title="Home"/>
+                    <figcaption>Home</figcaption>
+                </figure>
+            </a>
+            </li>
+            <li><a href="{% url 'predictor' %}">
+                <figure>
+                    <img class="sidebar-iconise" src="{% static 'images/search-white.png' %}"
+                         title="Predictor"/>
+                    <figcaption>Predictor</figcaption>
+                </figure>
+            </a>
+            </li>
+            
+            <li><a href="{% url 'documentation' %}">
+                <figure>
+                    <img class="sidebar-iconise" src="{% static 'images/document.png' %}"
+                         title="Documentation"/>
+                    <figcaption>Documentation</figcaption>
+                </figure>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle" on-c>&lt&ltHide</a>-->
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'js/buttons.flash.min.js' %}"></script>
+
+<script src="{% static 'js/jszip.min.js' %}"></script>
+<script src="{% static 'js/pdfmake.min.js' %}"></script>
+<script src="{% static 'js/vfs_fonts.js' %}"></script>
+<script src="{% static 'js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'js/buttons.print.min.js' %}"></script>
+
+<script src="{% static 'js/custom_datatables.plugin.input.js' %}"></script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+{% block FOOTER %}{% endblock %}
+</body>
+
+</html>

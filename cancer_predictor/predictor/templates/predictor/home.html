@@ -1,0 +1,40 @@
+{% extends 'predictor/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        <div class="panel-info">
+        <div class="panel-heading"><h2>About</h2></div>
+        <div class="panel-body"></div>
+        </div>
+    <div class="container-fluid">
+    <div class="jumbotron">
+
+        <p class="text-justify">
+            CanPred is a simple classifier using a radial kernal SVM, which classifies paitients into different kind of cancer tyoe from whole genome RNAseq data.</p>
+        <p class="text-justify">
+            Currently our classifier only supports 5 classes of cancers.
+            <ul>
+				<li>
+					PRAD: Prostate Adenocarcinoma
+				</li>
+				<li>
+					LUAD: Lung Adenocarcinoma
+				</li>
+				<li>
+					BRCA: Breast Cancer
+				</li>
+				<li>
+					KIRC: Kidney Renal Clear Cell Carcinoma
+				</li>
+				<li>
+					COAD: Colon Adenocarcinoma
+				</li>
+			</ul>
+				
+        </p>
+        <p class="text-justify">
+            For detailed information on the model please go through <a href="documentation">documentation page </a> 
+        </p>
+    </div>
+</div>
+
+{% endblock %}

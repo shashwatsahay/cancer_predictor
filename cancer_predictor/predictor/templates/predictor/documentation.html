@@ -1,0 +1,125 @@
+{% extends 'predictor/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        <div class="panel-info">
+        <div class="panel-heading"><h2>Model Description</h2></div>
+        <div class="panel-body"></div>
+        </div>
+    <div class="container-fluid">
+    <div class="jumbotron">
+		<ol>
+        <h2><li>Data Collection</li></h2>
+        <p class="text-justify">
+			Gene Expression Cancer RNA-seq Data Set was downloaded from 
+			"<a href="http://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq">UCI Machine Learning Repository</a>"<br>
+			A total of 801 samples (data points) with 20531 features were found.
+			<a name="table1">
+			<table class="table table-striped">
+				<caption> Table 1: Sample Compostion</caption>
+				<tr>
+					<th>Cancer Type</th><th>Sample Count</th>
+				</tr>
+				<tr>
+					<td>PRAD</td><td>136</td>
+				</tr>
+				<tr>
+					<td>LUAD</td><td>141</td>
+				</tr>
+				<tr>
+					<td>BRCA</td><td>300</td>
+				</tr>
+				<tr>
+					<td>KIRC</td><td>146</td>
+				</tr>
+				<tr>
+					<td>COAD</td><td>78</td>
+				</tr>
+				
+			</table>
+			</a>
+		</p>
+        <h2><li>Data Pre-Processing</li></h2>
+        <p class="text-justify">				
+			The data was split into train, test data set using 40% data as test set. As can be seen in <a href="#table1">Table 1</a> there is
+			imbalance in the the data sample for each class label, care was taken that this imbalance is also refelected in the training set.
+		</p>
+        <p class="text-justify">
+			Expression samples were checked for missing features (i.e. features with no data), no such features were found. The training sample 
+			features were normalised by removing the mean and scaling to unit variance.
+		</p>
+		<h2><li>Feature Selection</li></h2>
+		<ol type='a'>
+			<h3><li>Supervised Feature Selection</li></h3>
+			        <p class="text-justify">
+						All training set features with no variance were removed<br>
+						All training set features having a pearson correlation coefficient of above 0.70 (positive and negative) i.e. having 70% 
+						corelation were filtered out. Using these two methods we reduced the featues from 20531 to 12528
+					</p>
+			<h3><li>Unsupervised Feature Selection</li></h3>
+					<p class="text-justify">
+						The training set features were further filtered using multiple iteration of Random Forest Classifier using mean as threshold
+						to select features at each iteration. The iteration were run until a mean cross validation accuracy was found to be lower 
+						than 0.98 or the number of features were below or equal to 15. 8 features were selected. <a href="#ref1">Fig. 1 </a> shows
+						the gene id which were selected and their importance to the model. 
+						<div class="img-display">
+							<a name="ref1">
+						    <figure>
+									<img src="{% static 'images/feature_importance.png' %}"/>
+									<figcaption>Fig 1 Feature Importance</figcaption>
+							</figure>
+							</a>
+						</div>
+					</p>
+		</ol>
+		<h2><li>Classifier Creation</li></h2>
+		<p class="text-justify">
+			A Support Vector Classifier(SVC) with radial bias was selected for building the classifier based on literature review. For
+			biological data with small sample size multi-class label the performance of SVC is found to be better than other classifiers like 
+			Logistic Regression, kNN or LDA/QDA. 
+		</p>
+
+		<h2><li>Classifier Assesment</li></h2>
+		<p class="text-justify">	
+			The classifier is found to have a mean cross-validated training accuracy of 0.99(+/- 0.01) and a mean cross-validated testing accuracy of 0.98(+/- 0.03). <a href="#table2"> Table 2 </a> showcases the 
+			classification report for the classifier on test set.
+			A normalised confusion matrix shown in <a href="#ref2">Fig. 2</a> was also generated to support the overall assessment of the classifier.
+			<a name="table2">
+			<table class="table table-striped">
+				<tr><td>Accuracy</td><td>0.99</td><td></td><td></td><td></td></tr>
+				<tr>
+					<th></th><th>Precsion</th><th>Recall</th><th>f1-Score</th><th>Support</th>
+				</tr>
+				<tr>
+					<td>PRAD</td><td>1.00</td><td>1.00</td><td>1.00</td><td>54</td>
+				</tr>
+				<tr>
+					<td>LUAD</td><td>0.95</td><td>1.00</td><td>0.97</td><td>57</td>
+				</tr>
+				<tr>
+					<td>BRCA</td><td>1.00</td><td>0.98</td><td>0.99</td><td>120</td>
+				</tr>
+				<tr>
+					<td>KIRC</td><td>1.00</td><td>0.98</td><td>0.99</td><td>59</td>
+				</tr>
+				<tr>
+					<td>COAD</td><td>1.00</td><td>1.00</td><td>1.00</td><td>31</td>
+				</tr>
+				<tr>
+					<td>avg / total</td><td>0.99</td><td>0.99</td><td>0.99</td><td>321</td>
+				</tr>
+			</table>
+			</a>
+
+			<div class="img-display">
+				<a name="ref1">
+					<figure>
+						<img src="{% static 'images/normalised_confusion_matrix.png' %}"/>
+									<figcaption>Fig 2 Normalised Confusion Matrix</figcaption>
+					</figure>
+				</a>
+			</div>
+		</p>
+    </div>
+</div>
+
+{% endblock %}
