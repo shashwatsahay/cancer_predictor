@@ -53,13 +53,13 @@
 			        <p class="text-justify">
 						All training set features with no variance were removed<br>
 						All training set features having a pearson correlation coefficient of above 0.70 (positive and negative) i.e. having 70% 
-						corelation were filtered out. Using these two methods we reduced the featues from 20531 to 12528
+						corelation were filtered out. Using these two methods we reduced the featues from 20531 to 12427
 					</p>
 			<h3><li>Unsupervised Feature Selection</li></h3>
 					<p class="text-justify">
 						The training set features were further filtered using multiple iteration of Random Forest Classifier using mean as threshold
 						to select features at each iteration. The iteration were run until a mean cross validation accuracy was found to be lower 
-						than 0.98 or the number of features were below or equal to 15. 8 features were selected. <a href="#ref1">Fig. 1 </a> shows
+						than 0.98 or the number of features were below or equal to 15. 16 features were selected. <a href="#ref1">Fig. 1 </a> shows
 						the gene id which were selected and their importance to the model. 
 						<div class="img-display">
 							<a name="ref1">
@@ -85,27 +85,27 @@
 			A normalised confusion matrix shown in <a href="#ref2">Fig. 2</a> was also generated to support the overall assessment of the classifier.
 			<a name="table2">
 			<table class="table table-striped">
-				<tr><td>Accuracy</td><td>0.99</td><td></td><td></td><td></td></tr>
+				<tr><td>Accuracy</td><td>0.98</td><td></td><td></td><td></td></tr>
 				<tr>
 					<th></th><th>Precsion</th><th>Recall</th><th>f1-Score</th><th>Support</th>
 				</tr>
 				<tr>
-					<td>PRAD</td><td>1.00</td><td>1.00</td><td>1.00</td><td>54</td>
+					<td>PRAD</td><td>0.98</td><td>0.98</td><td>0.98</td><td>54</td>
 				</tr>
 				<tr>
-					<td>LUAD</td><td>0.95</td><td>1.00</td><td>0.97</td><td>57</td>
+					<td>LUAD</td><td>0.97</td><td>0.98</td><td>0.97</td><td>57</td>
 				</tr>
 				<tr>
-					<td>BRCA</td><td>1.00</td><td>0.98</td><td>0.99</td><td>120</td>
+					<td>BRCA</td><td>0.97</td><td>0.97</td><td>0.97</td><td>120</td>
 				</tr>
 				<tr>
-					<td>KIRC</td><td>1.00</td><td>0.98</td><td>0.99</td><td>59</td>
+					<td>KIRC</td><td>1.00</td><td>0.97</td><td>0.98</td><td>59</td>
 				</tr>
 				<tr>
 					<td>COAD</td><td>1.00</td><td>1.00</td><td>1.00</td><td>31</td>
 				</tr>
 				<tr>
-					<td>avg / total</td><td>0.99</td><td>0.99</td><td>0.99</td><td>321</td>
+					<td>avg / total</td><td>0.98</td><td>0.98</td><td>0.98</td><td>321</td>
 				</tr>
 			</table>
 			</a>

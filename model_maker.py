@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import sys
 
 def corr_df(features, corr_val):
     '''
@@ -78,9 +78,13 @@ def plot_confusion_matrix(
 
 # File/data processing
 # load csv files into handlers
-
-data_folder = 'TCGA-PANCAN-HiSeq-801x20531'
-
+if len(sys.argv)<4:
+	print("Usage:")
+	print("python model_maker.py <correlation_cutoff_value> <input_folder> <base_server_path>")
+	exit()
+	
+data_folder = sys.argv[2]
+outfolder =sys.argv[3]
 # import labels
 
 file_handle = open(data_folder + '/labels.csv')
@@ -101,10 +105,10 @@ for line in file_handle:
     else:
         labels[line[0]] = cls_can[line[1]]
 file_handle.close()
-handle=open("class_id.csv", "w")
+file_handle = open(outfolder + '/cancer_predictor/support/class_id.csv', 'w')
 for key in cls_can:
-	handle.write(key+','+str(cls_can[key])+'\n')
-handle.close()
+	file_handle.write(key+','+str(cls_can[key])+'\n')
+file_handle.close()
 # import data
 
 file_handle = open(data_folder + '/data.csv')
@@ -165,14 +169,14 @@ print ('Filtering features based on correlation threshold')
 
 # filter features using correlation threshold
 
-handle = open(data_folder + '/index_70.csv')
-filter_index = handle.readline().strip().split(',')
-filter_index = [int(index) for index in filter_index]
+#handle = open(data_folder + '/index_70.csv')
+#filter_index = handle.readline().strip().split(',')
+#filter_index = [int(index) for index in filter_index]
 
 # print(filter_index)
-# filter_index=corr_df(selected_features, 0.70)
-# filter_index1=[str(index) for  index in filter_index]
-# handle.write(','.join(filter_index1))
+filter_index=corr_df(selected_features, float(sys.argv[1]))
+#filter_index1=[str(index) for  index in filter_index]
+#handle.write(','.join(filter_index1))
 # handle.close()
 # print(filter_index)
 
@@ -232,7 +236,7 @@ plt.xticks(rotation=70)
 plt.ylabel('Feature Importance')
 plt.xlabel('Gene ID')
 plt.title('Importance of Selected Genes')
-plt.savefig('feature_importance.png', bbox_inches='tight',
+plt.savefig(outfolder+'/predictor/static/images/feature_importance.png', bbox_inches='tight',
             transparent=True)
 plt.close(fig)
 
@@ -240,7 +244,7 @@ print ('Selected Genes:')
 selected_genes = list()
 for i in gene_id:
     selected_genes.append(gene_list[i])
-handle=open("selected_genes.csv", "w")
+handle=open(outfolder+'/cancer_predictor/support/selected_genes.csv', "w")
 handle.write(','.join(selected_genes))
 handle.close()
 print ('\t'.join(selected_genes))
@@ -297,11 +301,12 @@ plt.tight_layout()
 plot_confusion_matrix(cnf_matrix, classes=target_name, normalize=True,
                       title='Normalized confusion matrix')
 
-plt.savefig('normalised_confusion_matrix.png', bbox_inches='tight',
+plt.savefig(outfolder+'/predictor/static/images/normalised_confusion_matrix.png', bbox_inches='tight',
             transparent=True)
 
 from sklearn.externals import joblib
-joblib.dump(clf, 'cancer_classifier.pkl')
-joblib.dump(scaler, 'scaler.pkl')
+joblib.dump(clf, outfolder+'/cancer_predictor/support/cancer_classifier.pkl')
+joblib.dump(scaler, outfolder+'/cancer_predictor/support/scaler.pkl')
 
 			
+
